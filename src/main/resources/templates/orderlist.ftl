@@ -58,7 +58,7 @@
                 </#list>
             </tbody>
         </table>
-        <a href="/order/create/*" type="button" class="btn btn-success">Add new person</a>
+        <a href="/order/create/*" type="button" class="btn btn-success">Add new order</a>
         <a href="/index.html" type="button" class="btn btn-success">Start Page</a>
     </div>
 

@@ -9,11 +9,14 @@ import edu.voloshin.tryshop.services.order.interfaces.IOrderService;
 import edu.voloshin.tryshop.services.person.impls.PersonServiceImpl;
 import edu.voloshin.tryshop.services.product.impls.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -68,6 +71,16 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         orderRepository.saveAll(orders);
+
+    }
+
+    @Scheduled(cron = "0 * * * * ?")
+    void CalcBuybackPrice ()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Date now = new Date();
+        String strDate = sdf.format(now);
+        System.out.println("Java cron job expression:: " + strDate);
 
     }
 }
