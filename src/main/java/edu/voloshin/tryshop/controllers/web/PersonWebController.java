@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/person")
 @CrossOrigin("*")
@@ -53,8 +54,15 @@ public class PersonWebController {
     public String createPerson(Model model, @PathVariable("id") String id){
         PersonForm personForm = new PersonForm();
         Person newPerson;
+        Map modelMap = model.asMap();
+        System.out.println("-------");
+        for (Object modelKey : modelMap.keySet()) {
+            Object modelValue = modelMap.get(modelKey);
+            System.out.println(modelKey + " ++ " + modelValue.toString());
+        }
+        System.out.println("-------");
 
-        System.out.println(conteinerIdService.getContIdService().getTypeId());
+        //System.out.println(conteinerIdService.getContIdService().getTypeId());
         if(conteinerIdService.getContIdService().getContId()!=null && conteinerIdService.getContIdService().getTypeId()==TypeId.PASSPORT ) {
             personForm.setPassport(passportService.get(conteinerIdService.getContIdService().getContId()).getFirstName() + " " +
                     passportService.get(conteinerIdService.getContIdService().getContId()).getMiddleName() + " " +
@@ -118,7 +126,7 @@ public class PersonWebController {
         newPerson.setGender(personForm.getGender());
         newPerson.setIpn(personForm.getIpn());
         personService.update(newPerson);
-        System.out.println(personService.get(id).getPassport().getNumber());
+        //System.out.println(personService.get(id).getPassport().getNumber());
         return "redirect:/person/list";
     }
 

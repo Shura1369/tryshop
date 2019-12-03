@@ -12,5 +12,4 @@ public class TryshopApplication {
     public static void main(String[] args) {
         SpringApplication.run(TryshopApplication.class, args);
     }
-
 }

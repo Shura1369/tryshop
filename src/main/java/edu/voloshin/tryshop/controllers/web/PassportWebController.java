@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequestMapping("/passport")
@@ -90,15 +91,20 @@ public class PassportWebController {
                 LocalDate.parse(passportForm.getDataObt(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
         passportForm.setId( passportService.create(newPassport).getId());
         conteinerIdService.setContIdService(TypeId.PASSPORT,passportForm.getId());
-        System.out.println(passportForm.getPersonId());
+        //System.out.println(passportForm.getPersonId());
+        model.addAttribute("passport", newPassport);
+        Map modelMap = model.asMap();
+        for (Object modelKey : modelMap.keySet()) {
+            Object modelValue = modelMap.get(modelKey);
+            System.out.println(modelKey + " +++++ " + modelValue.toString());
+        }
         if(passportForm.getPersonId()!=null)
         {
-            String persId="redirect:/person/create/"+passportForm.getPersonId();
-            return persId;
-            //return "redirect:/person/create";
+                String persId = "redirect:/person/create/" + passportForm.getPersonId();
+                return persId;
+
         }
-        else
-        return "redirect:/passport/list";
+        else return "redirect:/passport/list";
 
 
 
@@ -107,6 +113,14 @@ public class PassportWebController {
     @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
     public  String updatePassport(Model model,@PathVariable("id") String id)
     {
+        System.out.println("?????????");
+
+        Map modelMap = model.asMap();
+        for (Object modelKey : modelMap.keySet()) {
+            Object modelValue = modelMap.get(modelKey);
+            System.out.println(modelKey + " +++++ " + modelValue.toString());
+        }
+        System.out.println("?????????");
         PassportForm passportForm = new PassportForm();
         Passport passportUpdate = passportService.get(id);
         passportForm.setId(id);
